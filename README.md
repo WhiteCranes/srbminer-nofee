@@ -27,7 +27,7 @@
 
 所有矿机都必须通过 `--proxy` 指定 SOCKS5 服务器的实际 IP 和端口。
 
-## 安装依赖(Linux不用这一步)
+## 安装依赖(仅Win环境需要)
 
 ```bash
 pip install frida
