@@ -1,0 +1,47 @@
+#!/bin/sh
+# SRBMiner's startup payload is supplied from the user's offline copy.
+# All other requests are passed unchanged to the system wget.
+source_file=$PWD/dont_block_4.txt
+output_file=
+has_output=0
+want_output=0
+target_url=
+for arg do
+    if [ "$want_output" -eq 1 ]; then
+        output_file=$arg
+        has_output=1
+        want_output=0
+        continue
+    fi
+    case "$arg" in
+        -O|--output-document) want_output=1 ;;
+        -O?*) output_file=${arg#-O}; has_output=1 ;;
+        --output-document=*) output_file=${arg#--output-document=}; has_output=1 ;;
+        https://srbminer.com/01082026_4/dont_block_4.txt|http://srbminer.com/01082026_4/dont_block_4.txt|http://95.216.148.81/01082026_4/dont_block_4.txt|https://95.216.148.81/01082026_4/dont_block_4.txt|\
+        'https://drive.google.com/uc?export=download&id=1duaiG8pHdVxq_7UeNDQDm-DFXaJqB1PH'|\
+        'https://drive.google.com/uc?export=download&id=1s0iBy3kUo22IJrOOoXHHllFCmnPZwfLU')
+            target_url=$arg ;;
+    esac
+done
+if [ -z "$target_url" ]; then
+    exec /usr/bin/wget "$@"
+fi
+if [ "$want_output" -eq 1 ]; then
+    printf '%s\n' 'offline wget: missing output filename' >&2
+    exit 2
+fi
+if [ ! -s "$source_file" ] || [ ! -r "$source_file" ]; then
+    printf 'offline wget: cannot read %s\n' "$source_file" >&2
+    exit 1
+fi
+if [ "$has_output" -eq 0 ]; then
+    output_file=dont_block_4.txt
+fi
+printf '%s offline source=%s output=%s url=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$source_file" "$output_file" "$target_url" >> /root/srb/offline-wget.log
+if [ "$output_file" = '-' ]; then
+    exec /bin/cat "$source_file"
+fi
+if [ "$(readlink -f -- "$output_file")" = "$source_file" ]; then
+    exit 0
+fi
+exec /bin/cp -- "$source_file" "$output_file"
