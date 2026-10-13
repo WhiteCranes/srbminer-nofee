@@ -36,7 +36,13 @@ pip install frida
 ## 使用方法
 
 ```bash
+#for win
 python patch_win.py <SRBMiner-MULTI.exe路径> --proxy 192.168.1.2:1080 --pool xxx --wallet xxx
+
+#for Linux
+#Linux版本miner会调用wget下载一个文件,避免这个文件发生变化或额外使用网络,封装一个wget返回本地的dont_block_4.txt
+chmod +x wget
+export PATH="$PWD:$PATH"
 
 python patch_linux.py <SRBMiner-MULTI.exe路径> --proxy 192.168.1.2:1080 --pool xxx --wallet xxx
 ```
