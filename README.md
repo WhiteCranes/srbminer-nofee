@@ -1,5 +1,6 @@
 核心原理,让内核连接devpool时信任任何证书,然后重定向devpool和修改钱包
 
+pip install frida
 #  用法:
 #     python patch_win.py <SRBMiner-MULTI.exe路径> --proxy 127.0.0.1:1080 --pool xxx --wallet xxx ...
 
