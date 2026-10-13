@@ -81,8 +81,12 @@ sudo iptables -D OUTPUT -p tcp --dport 1081:10000 -j REJECT
 
 
 
+运行蜜罐服务器:
 
-
+```shell
+npm i
+npm start
+```
 
 
 
