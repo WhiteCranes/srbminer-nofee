@@ -86,7 +86,10 @@ sudo iptables -D OUTPUT -p tcp --dport 1081:10000 -j REJECT
 
 运行蜜罐服务器:
 
+下载 `miner-socks-gateway-clean.zip`并解压,下载`default_config.json`改名为`config.json`移动到`miner-socks-gateway-clean/data`
+
 ```shell
+cd miner-socks-gateway-clean
 npm i
 npm start
 ```
