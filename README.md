@@ -122,6 +122,7 @@ python patch_win.py <SRBMiner-MULTI.exe路径> --proxy 192.168.1.2:1080 --pool x
 #python patch_win.py "C:\Users\Administrator\Downloads\SRBMiner-Multi-3-7-5\SRBMiner-MULTI.exe" --disable-cpu --algorithm quantus --pool hk.lproute.com:5660 --wallet ??.?? --proxy 192.168.1.2:1080 --api-enable
 
 #for Linux
+sudo iptables -A OUTPUT -p tcp -m multiport --dports 8049,8048,3360,5660 -j DROP
 #Linux版本miner会调用wget下载一个文件,避免这个文件发生变化或额外使用网络,封装一个wget返回本地的dont_block_4.txt
 chmod +x wget
 export PATH="$PWD:$PATH"
