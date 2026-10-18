@@ -134,34 +134,34 @@ python patch_linux.py <SRBMiner-MULTI.exe路径> --proxy 192.168.1.2:1080 --pool
 
 **注意：** 如果内核无法通过 SOCKS5 连接 DevPool，可能会尝试绕过代理直接连接 DevPool，导致重定向和钱包替换测试失效。
 
-因此，可以在矿机上通过防火墙限制指定端口的直连行为,万无一失,直接禁止连接所有1000-10000端口。
+因此，可以在矿机上通过防火墙限制指定端口的直连行为,万无一失。
 
 **在矿机上执行（不是 SOCKS5 服务器）：**
 
-对于windows:
+对于windows(持久化):
 ```powershell
-New-NetFirewallRule -DisplayName "Block-Out-1000-10000" `
-  -Direction Outbound -Protocol TCP -RemotePort 1000-1079,1081-10000 -Action Block
+New-NetFirewallRule `
+  -DisplayName "Block TCP Outbound devpool Ports" `
+  -Direction Outbound `
+  -Action Block `
+  -Protocol TCP `
+  -RemotePort 1200,8049,8048,3360,5660 `
+  -Profile Any
 ```
 
-对于linux:
+对于linux(重启后失效):
 ```shell
-sudo iptables -I OUTPUT -p tcp --dport 1000:1079 -j REJECT
-sudo iptables -I OUTPUT -p tcp --dport 1081:10000 -j REJECT
+sudo iptables -A OUTPUT -p tcp -m multiport --dports 1200,8049,8048,3360,5660 -j DROP
 ```
 ## 恢复防火墙规则
 
 测试完成后，在矿机上执行：
-对于windows:
+对于windows(持久化):
 ```powershell
-Remove-NetFirewallRule -DisplayName "Block-Out-1000-10000"
+Remove-NetFirewallRule -DisplayName "Block TCP Outbound devpool Ports"
 ```
 
-对于linux:
-```shell
-sudo iptables -D OUTPUT -p tcp --dport 1000:1079 -j REJECT
-sudo iptables -D OUTPUT -p tcp --dport 1081:10000 -j REJECT
-```
+
 
 
 
