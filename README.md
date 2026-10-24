@@ -26,11 +26,6 @@ Rig 1    Rig 2    Rig 3 ...
 
 All mining rigs must specify the actual IP and port of the SOCKS5 server via `--proxy`.
 
-## Install Dependencies (Windows only)
-
-```bash
-pip install frida
-```
 
 ## Usage
 
@@ -107,11 +102,6 @@ sudo iptables -D OUTPUT -p tcp --dport 1081:10000 -j REJECT
 
 所有矿机都必须通过 `--proxy` 指定 SOCKS5 服务器的实际 IP 和端口。
 
-## 安装依赖(仅Win环境需要)
-
-```bash
-pip install frida
-```
 
 ## 使用方法
 
@@ -145,13 +135,13 @@ New-NetFirewallRule `
   -Direction Outbound `
   -Action Block `
   -Protocol TCP `
-  -RemotePort 1200,8049,8048,3360,5660 `
+  -RemotePort 1200,8049,8048,3360,5660,18005 `
   -Profile Any
 ```
 
 对于linux(重启后失效):
 ```shell
-sudo iptables -A OUTPUT -p tcp -m multiport --dports 1200,8049,8048,3360,5660 -j DROP
+sudo iptables -A OUTPUT -p tcp -m multiport --dports 1200,8049,8048,3360,5660,18005 -j DROP
 ```
 ## 恢复防火墙规则
 
