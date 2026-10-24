@@ -77,7 +77,7 @@ sudo iptables -D OUTPUT -p tcp --dport 1081:10000 -j REJECT
 
 ## 核心原理
 
-通过 Frida 修改内核运行时行为，使其连接 DevPool 时信任任意证书，再通过 SOCKS5 代理实现 DevPool 重定向及钱包地址替换测试。
+修改矿工运行时行为，使其连接 DevPool 时信任任意证书，再通过 SOCKS5 代理实现 DevPool 重定向及钱包地址替换。
 
 ## 部署说明
 
